@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+test {
+    finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+    // JaCoCo 버전
+    toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+    reports {
+        // 원하는 리포트를 켜고 끌 수 있습니다.
+        html.enabled true
+        xml.enabled false
+        csv.enabled false
+
+        finalizedBy 'jacocoTestCoverageVerification'
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 1.0
+            }
+        }
+    }
+}
